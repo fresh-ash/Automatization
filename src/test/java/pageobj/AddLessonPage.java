@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.time.Duration;
+
 public class AddLessonPage {
 
     private final WebDriver driver;
@@ -13,7 +15,7 @@ public class AddLessonPage {
 
     public AddLessonPage(WebDriver driver) {
         this.driver = driver;
-        this.driver.get(Constants.BASE_URL + "/lessons/add");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
     }
 
     private final By inputLessonTheme = By.id("inputLessonTheme");
@@ -21,7 +23,8 @@ public class AddLessonPage {
     private final By chooseDateTime = By.id("choose-date-time");
     private final By mentorEmail = By.id("mentorEmail");
     private final By classRegisterButton = By.id("class-register-btn");
-    private final By cancelButton = By.className("btn btn-secondary btn-lg");
+    //private final By cancelButton = By.className("btn btn-secondary btn-lg");
+    private final By title = By.tagName("H3");
 
     public AddLessonPage fillLessonTheme(String str){
         driver.findElement(inputLessonTheme).sendKeys(str);
@@ -32,8 +35,8 @@ public class AddLessonPage {
         driver.findElement(classRegisterButton).click();
     }
 
-    public Lessons clickCancelButton(){
-        driver.findElement(cancelButton).click();
-        return new Lessons(driver);
+
+    public String getTitle(){
+        return driver.findElement(title).getText();
     }
 }

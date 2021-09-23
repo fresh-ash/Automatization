@@ -1,7 +1,10 @@
 package pageobj;
 
+import interfaces.Constants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+import java.time.Duration;
 
 public class AuthPage {
 
@@ -9,23 +12,33 @@ public class AuthPage {
 
     public AuthPage(WebDriver driver) {
         this.driver = driver;
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
     }
 
     private final By inputEmail = By.id("email");
     private final By inputPass = By.id("password");
     private final By signIn = By.xpath("//button[@type='submit']");
 
-    public AuthPage enterEmail(String str){
+    private AuthPage enterEmail(String str){
         driver.findElement(inputEmail).sendKeys(str);
         return this;
     }
 
-    public AuthPage enterPass(String str){
+    private AuthPage enterPass(String str){
         driver.findElement(inputPass).sendKeys(str);
         return this;
     }
-    public Lessons clickSignInButton(){
+
+    private String logIn(String mail, String pass){
+        enterEmail(mail);
+        enterPass(pass);
         driver.findElement(signIn).click();
+        return driver.getCurrentUrl();
+    }
+
+    public Lessons logInAsMentor(){
+        logIn(Constants.MENTOR_MAIL, Constants.MENTOR_PASS);
+        System.out.println(driver.getCurrentUrl());
         return new Lessons(driver);
     }
 
