@@ -27,13 +27,14 @@ public class Auth {
     private final By logOutHref = By.xpath("/html/body/div/nav/div/div[2]/ul/li[3]/a");
 
     public <T> T logIn(){
+
         return (T) new DefaulPage();
     }
 
 
     public void logOut(){
         Auth auth = new Auth(driver);
-        auth.<AsAdmin>logIn().getPage().goToStartPage().getPage();
+        auth.<AsAdmin>logIn().getPage().goToStartPage().goToLessons().addLesson().goToStartPage();
         PageStore store = new PageStore(new LogInPage());
         driver.findElement(span).click();
         driver.findElement(logOutHref).click();

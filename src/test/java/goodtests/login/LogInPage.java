@@ -8,6 +8,10 @@ public class LogInPage extends Page<LogInPage>{
         return this;
     }
 
+    public Lessos goToLessons(){
+        return new Lessos();
+    }
+
     static Function<Integer, Integer> getHandler(int handler) {
         return (amount) -> {
             if (amount >= handler) {
