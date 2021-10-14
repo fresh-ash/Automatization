@@ -5,8 +5,10 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
+import java.util.List;
 
 public class AddLessonPage {
 
@@ -24,7 +26,7 @@ public class AddLessonPage {
     private final By mentorEmail = By.id("mentorEmail");
     private final By classRegisterButton = By.id("class-register-btn");
     //private final By cancelButton = By.className("btn btn-secondary btn-lg");
-    private final By title = By.tagName("H3");
+    private final By addLessonButton2 = By.id("group-list");
 
     public AddLessonPage fillLessonTheme(String str){
         driver.findElement(inputLessonTheme).sendKeys(str);
@@ -37,6 +39,11 @@ public class AddLessonPage {
 
 
     public String getTitle(){
-        return driver.findElement(title).getText();
+        List<WebElement> elementList = driver.findElements(addLessonButton2);
+        for (WebElement element : elementList){
+            System.out.println(element);
+        }
+
+        return null;
     }
 }

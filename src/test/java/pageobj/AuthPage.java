@@ -3,8 +3,11 @@ package pageobj;
 import interfaces.Constants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+
+import static interfaces.Constants.BASE_URL;
 
 public class AuthPage {
 
@@ -29,17 +32,25 @@ public class AuthPage {
         return this;
     }
 
-    private String logIn(String mail, String pass){
+    public String logIn(String mail, String pass){
         enterEmail(mail);
         enterPass(pass);
         driver.findElement(signIn).click();
         return driver.getCurrentUrl();
     }
 
-    public Lessons logInAsMentor(){
+    public LessonsPage logInAsMentor(){
         logIn(Constants.MENTOR_MAIL, Constants.MENTOR_PASS);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(x -> driver.getCurrentUrl().equals(BASE_URL+"/lessons"));
         System.out.println(driver.getCurrentUrl());
-        return new Lessons(driver);
+        return new LessonsPage(driver);
+    }
+
+    public StudentsPage logInAsAdmin(){
+        logIn(Constants.ADMIN_MAIL, Constants.ADMIN_PASS);
+        System.out.println(driver.getCurrentUrl());
+        return new StudentsPage();
     }
 
 }
